@@ -4,8 +4,16 @@ import LoginForm from "../components/LoginForm";
 import SignUpForm from "../components/SignUpForm";
 import { Button } from "../styles";
 
-function Login({ onLogin }) {
+function Login({ onLogin, setUser, user }) {
   const [showLogin, setShowLogin] = useState(true);
+
+  function handleLogoutClick() {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        setUser(null);
+      }
+    });
+  }
 
   return (
     <Wrapper>
@@ -19,6 +27,9 @@ function Login({ onLogin }) {
             <Button color="secondary" onClick={() => setShowLogin(false)}>
               Sign Up
             </Button>
+            <Button variant="outline" onClick={handleLogoutClick}>
+          Logout
+        </Button>
           </p>
         </>
       ) : (
@@ -30,6 +41,7 @@ function Login({ onLogin }) {
             <Button color="secondary" onClick={() => setShowLogin(true)}>
               Log In
             </Button>
+           
           </p>
         </>
       )}
